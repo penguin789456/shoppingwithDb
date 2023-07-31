@@ -1,11 +1,18 @@
 <?php 
 session_start();
-$id=$_GET["id"];
+$link = mysqli_connect(
+    'localhost',
+    // MySQL主機名稱
+    'root',
+    // 使用者名稱 
+    '123456',
+    // 密碼 
+    'shoppingwithdb'
+);
 if(isset($_SESSION["tel"])){
-    $fileN="user/".$_SESSION["tel"].".txt";
-    if(file_exists($fileN)){
-        unlink($fileN);
-    }
+    $sql="DELETE FROM orderdetail WHERE telPhone='".$_SESSION["tel"]."'";
+    echo $sql;
+    mysqli_query($link, $sql);
 }
 header("location:showCart.php")
 ?>
