@@ -1,6 +1,10 @@
 {
     "cSpell.words": [
+        "autoloader",
         "orderdetail",
-        "shoppingwithdb"
+        "ordertotal",
+        "shoppingwithdb",
+        "SMTPS",
+        "STARTTLS"
     ]
 }
