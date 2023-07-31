@@ -7,6 +7,7 @@
     <title>Document</title>
     <link href="shoppingCss.css" rel="stylesheet">
     <?php
+    session_start();
     $link = mysqli_connect(
         'localhost',
         // MySQL主機名稱
