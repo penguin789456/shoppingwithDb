@@ -13,7 +13,8 @@ if(isset($_SESSION["tel"])){
     $sqlTel = "SELECT * FROM customer WHERE telPhone=('".$_SESSION["tel"]."')";
     $sqlProduct = "SELECT * FROM product WHERE pID=('".$_GET["id"]."')";
     if(mysqli_query($link, $sqlTel) and mysqli_query($link, $sqlProduct)){
-        $sql="INSERT INTO orderdetail values('".$_SESSION["tel"]."','".$_GET["id"]."')";
+        $sql="INSERT INTO orderdetail(`telPhone`,`pID`) values('".$_SESSION["tel"]."','".$_GET["id"]."')";
+        echo $sql;
         mysqli_query($link, $sql);
     }
 }

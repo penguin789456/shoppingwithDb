@@ -16,11 +16,11 @@
         // 密碼 
         'shoppingwithdb'
     );
-    $sql = "SELECT pID FROM orderdetail WHERE telPhone=('".$_SESSION["tel"]."')";
+    $sql = "SELECT ID,pID FROM orderdetail WHERE telPhone=('".$_SESSION["tel"]."')";
     if($result=mysqli_query($link, $sql)){
         $productArray=array();
         while($rowP=mysqli_fetch_array($result)){
-            array_push($productArray,$rowP[0]);
+            array_push($productArray,$rowP);
         }
     }
     ?>
@@ -35,7 +35,7 @@
                     $total=0;
                     if(isset($productArray)){
                         foreach ($productArray as $pID) {
-                            $sql = "SELECT * FROM product WHERE pID=('".$pID."')";
+                            $sql = "SELECT * FROM product WHERE pID=('".$pID[1]."')";
                             if($result=mysqli_query($link, $sql)){
                                 $product=mysqli_fetch_array($result);
                                 echo 
@@ -51,6 +51,7 @@
                                 <tr>
                                     <td>價格".$product[2]."</td>
                                 </tr>
+                                    <td colspan='2' style='text-align:center'><a href='cleanCart_product.php?id=".$pID[0]."'>刪除</a></td>
                                 </table>
                                 ";
                             }
