@@ -6,24 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="shoppingCss.css" rel="stylesheet">
+    <?php
+    $link = mysqli_connect(
+        'localhost',
+        // MySQL主機名稱
+        'root',
+        // 使用者名稱 
+        '123456',
+        // 密碼 
+        'shoppingwithdb'
+    );
+    if(isset($_POST["tel"])){
+        $_SESSION["tel"]=$_POST["tel"];
+        $sql = "SELECT * FROM customer WHERE where = '".$_POST["tel"]."';";
+        if(!mysqli_query($link, $sql)){
+            $sql = "INSERT INTO customer values('".$_POST["tel"]."')";
+            mysqli_query($link, $sql);
+        }
+    }
+    ?>
 </head>
 
 <body>
     <?php
-    session_start();
-    if(!isset($_SESSION["tel"])){
-        $_SESSION["tel"] = $_POST["tel"];
+    $sql = "SELECT * FROM product;";
+    $product=array();
+    if($result=mysqli_query($link, $sql)){
+        while($rowP=mysqli_fetch_array($result)){
+            array_push($product,$rowP);
+        }
     }
-    //set user
-    
-    $file = file("product.txt");
-    $product = array();
-    foreach ($file as $x) {
-        array_push($product, explode(",", $x));
-    }
-    $_SESSION["pd"]=array();
-    $_SESSION["pd"]=$product;
-    //set product array
     ?>
     <div class="container">
         <h1>商品目錄</h1>
