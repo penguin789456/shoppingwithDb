@@ -1,0 +1,11 @@
+<?php 
+session_start();
+$id=$_GET["id"];
+if(isset($_SESSION["tel"])){
+    $fileN="user/".$_SESSION["tel"].".txt";
+    if(file_exists($fileN)){
+        unlink($fileN);
+    }
+}
+header("location:showCart.php")
+?>
