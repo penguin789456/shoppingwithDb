@@ -18,11 +18,8 @@
     );
     if(isset($_POST["tel"])){
         $_SESSION["tel"]=$_POST["tel"];
-        $sql = "SELECT * FROM customer WHERE where = '".$_POST["tel"]."';";
-        if(!mysqli_query($link, $sql)){
-            $sql = "INSERT INTO customer values('".$_POST["tel"]."')";
-            mysqli_query($link, $sql);
-        }
+        $sql = "INSERT INTO customer values('".$_POST["tel"]."')";
+        mysqli_query($link, $sql);
     }
     ?>
 </head>
