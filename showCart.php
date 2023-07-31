@@ -6,15 +6,23 @@
     <title>Document</title>
     <link href="shoppingCss.css" rel="stylesheet">
     <?php 
-        session_start();
-        $fileN="user/". $_SESSION["tel"].".txt";
-        if(file_exists($fileN)){
-            $file=file($fileN);
-            $product = array();
-            foreach ($file as $x) {
-            array_push($product, explode(",", $x));
+    session_start();
+    $link = mysqli_connect(
+        'localhost',
+        // MySQL主機名稱
+        'root',
+        // 使用者名稱 
+        '123456',
+        // 密碼 
+        'shoppingwithdb'
+    );
+    $sql = "SELECT pID FROM orderdetail WHERE telPhone=('".$_SESSION["tel"]."')";
+    if($result=mysqli_query($link, $sql)){
+        $productArray=array();
+        while($rowP=mysqli_fetch_array($result)){
+            array_push($productArray,$rowP[0]);
         }
-        }
+    }
     ?>
 </head>
 <body>
@@ -25,24 +33,28 @@
             <div class="table_Container">
                 <?php
                     $total=0;
-                    if(isset($product)){
-                        foreach ($product as $det) {
-                            echo 
-                            "
-                            <table>
-                            <tr>
-                            <td rowspan='3'><img src='pics\\".$det[3]."'></td>
-                            <td >ID：".$det[0]."</td>
-                            </tr>
-                            <tr>
-                                <td>名稱：".$det[1]."</td>
-                            </tr>
-                            <tr>
-                                <td>價格".$det[2]."</td>
-                            </tr>
-                            </table>
-                            ";
-                            $total+=$det[2];
+                    if(isset($productArray)){
+                        foreach ($productArray as $pID) {
+                            $sql = "SELECT * FROM product WHERE pID=('".$pID."')";
+                            if($result=mysqli_query($link, $sql)){
+                                $product=mysqli_fetch_array($result);
+                                echo 
+                                "
+                                <table>
+                                <tr>
+                                <td rowspan='3'><img src='pics\\".$product[3]."'></td>
+                                <td >ID：".$product[0]."</td>
+                                </tr>
+                                <tr>
+                                    <td>名稱：".$product[1]."</td>
+                                </tr>
+                                <tr>
+                                    <td>價格".$product[2]."</td>
+                                </tr>
+                                </table>
+                                ";
+                            }
+                            $total+=$product[2];
                         }
                         $_SESSION["total"]=$total;
                     }
