@@ -25,9 +25,9 @@
 
     date_default_timezone_set('Asia/Taipei'); //設定時間為台北時區
     $date = date('Y-m-d H:i:s');
-    $sql = "SELECT tel FROM ordertotal WHERE telPhone=('".$tel."')";
+    $sql = "INSERT INTO ordertotal values('" . $tel . "','" . $total . "','" . $date . "')";
     if(!mysqli_query($link, $sql)){
-        $sql = "INSERT INTO ordertotal values('" . $tel . "','" . $total . "','" . $date . "')";
+        $sql = "UPDATE ordertotal SET totalCost='".$total."'".",Time='".$date."' WHERE telPhone='".$tel."'";
         mysqli_query($link, $sql);
     }
     echo "<h1>感謝購買總金額為：" . $_SESSION["total"] . "</h1>";
